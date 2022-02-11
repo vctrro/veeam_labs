@@ -4,12 +4,12 @@ namespace Lab12
 {
     public class Publisher
     {
-        public Publisher(EventBus<string> eventBus)
+        public Publisher(EventBus<EventMessage> eventBus)
         {
             this.eventBus = eventBus;
         }
 
-        private readonly EventBus<string> eventBus;
+        private readonly EventBus<EventMessage> eventBus;
 
         public void InitEvents()
         {
@@ -18,7 +18,7 @@ namespace Lab12
             eventBus.AddEvent("OnKeyQ");
             eventBus.AddEvent("OnKeyQ");
 
-            eventBus.AddSubscriber("OnKeyK", (s) => Console.WriteLine($"\n{s} - in publisher"));
+            eventBus.AddSubscriber("OnKeyK", (m) => Console.WriteLine($"\n{m.Message} - in publisher"));
         }
 
         public void Work()
@@ -31,11 +31,11 @@ namespace Lab12
 
                 switch (key)
                 {
-                    case ConsoleKey.K : eventBus.InvokeEvent("OnKeyK", "Key K pressed");
+                    case ConsoleKey.K : eventBus.InvokeEvent("OnKeyK", new EventMessageForK($"Key {key} pressed", "This message for K"));
                         break;
-                    case ConsoleKey.T : eventBus.InvokeEvent("OnKeyT", "Key T pressed");
+                    case ConsoleKey.T : eventBus.InvokeEvent("OnKeyT", new EventMessage($"Key {key} pressed"));
                         break;
-                    case ConsoleKey.Q : eventBus.InvokeEvent("OnKeyQ", "Key Q pressed");
+                    case ConsoleKey.Q : eventBus.InvokeEvent("OnKeyQ", new EventMessage($"Key {key} pressed"));
                         break;
                 }
             }

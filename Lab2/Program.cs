@@ -7,7 +7,7 @@ namespace Lab12
         static void Main()
         {
             Console.WriteLine("Lab 1.2 - EventBus\n");
-            EventBus<string> eventBus = new();
+            EventBus<EventMessage> eventBus = new();
             print();
             Publisher publisher = new(eventBus);
             publisher.InitEvents();

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Lab12
 {
-    public class EventBus<T>
+    public class EventBus<T> where T : IEventMessage
     {
         public EventBus()
         {

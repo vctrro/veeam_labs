@@ -5,20 +5,22 @@ namespace Lab12
 {
     public class Subscriber
     {
-        public Subscriber(EventBus<string> eventBus)
+        public Subscriber(EventBus<EventMessage> eventBus)
         {
             eventNames = eventBus.GetAllEvents();
 
             foreach (var name in eventNames)
             {
                 eventBus.AddSubscriber(name, Print);
+                if (name == "OnKeyK") eventBus.AddSubscriber(name, PrintK);
             }
 
-            eventBus.AddSubscriber("OnKeyM", (s) => Console.WriteLine($"\n{s} - in subscriber"));
+            eventBus.AddSubscriber("OnKeyM", (m) => Console.WriteLine($"\n{m.Message} - in subscriber"));
         }
 
         private List<string> eventNames;
 
-        public void Print(string s) => Console.WriteLine($"\n{s} at {DateTime.Now:F}");
+        public void Print(IEventMessage m) => Console.WriteLine($"\n{m.Message} at {DateTime.Now:F}");
+        public void PrintK(IEventMessage m) => Console.WriteLine($"\n{m.Message} at {DateTime.Now:F} / {(((EventMessageForK)m).AdditonalMessage)}");
     }
 }
