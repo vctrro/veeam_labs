@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lab12
+namespace Lab1_2_Delegates
 {
     public class Publisher
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lab1
+namespace Lab1_1_Immutable
 {
     class Program
     {

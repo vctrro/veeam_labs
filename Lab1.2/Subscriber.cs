@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Lab12
+namespace Lab1_2_Delegates
 {
     public class Subscriber
     {

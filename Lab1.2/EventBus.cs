@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 
-namespace Lab12
+namespace Lab1_2_Delegates
 {
     public delegate void NewDelegate<T>(T value);
 
