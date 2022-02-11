@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace Lab12
 {
+    public delegate void NewDelegate<T>(T value);
+
     public class EventBus<T> where T : IEventMessage
     {
         public EventBus()
         {
             eventList = new();
         }
-
-        public delegate void NewDelegate(T value);
 
         private readonly List<NewEvent> eventList;
 
@@ -29,7 +29,7 @@ namespace Lab12
             }
         }
 
-        public void AddSubscriber(string name, NewDelegate value)
+        public void AddSubscriber(string name, NewDelegate<T> value)
         {
             var newEvent = eventList.Find(x => x.Name == name);
             if (newEvent == null)
@@ -41,7 +41,7 @@ namespace Lab12
             newEvent.Event += value;
         }
 
-        public bool DelSubscriber(string name, NewDelegate value)
+        public bool DelSubscriber(string name, NewDelegate<T> value)
         {
             var newEvent = eventList.Find(x => x.Name == name);
             if (newEvent != null)
@@ -73,7 +73,7 @@ namespace Lab12
             }
 
             public string Name { get; }
-            public event NewDelegate Event;
+            public event NewDelegate<T> Event;
 
             public void Invoked(T value)
             {
