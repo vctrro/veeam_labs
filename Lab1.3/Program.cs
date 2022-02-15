@@ -32,7 +32,7 @@ namespace Lab1_3_LINQ
             Console.WriteLine("\n----- Exercise 4 -----\n");
             var dictionary = CreateDictionary("This dog eats too much vegetables after lunch",
                 "Эта собака ест слишком много овощей после обеда");
-            PrintTranslatedBook("This dog eats too much vegetables after lunch", dictionary, 2);
+            PrintTranslatedBook("This dog eats too much vegetables after lunch", dictionary, 0);
         }
 
         public static string GetAllWithoutFirst3(IEnumerable<INamed> source, char delimeter)
@@ -91,6 +91,7 @@ namespace Lab1_3_LINQ
                 from word in book.Split().Select(s => s.ToLower())
                 select dictionary[word].ToUpper();
 
+            wordsOnPage = wordsOnPage > 0 ? wordsOnPage : 1;
             while (translatedBook.Any())
             {
                 Console.WriteLine(translatedBook.Take(wordsOnPage).Aggregate((x, y) => x + " " + y));
