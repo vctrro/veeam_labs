@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Lab1_3_LINQ
+﻿namespace Lab1_3_LINQ
 {
     public interface INamed
     {

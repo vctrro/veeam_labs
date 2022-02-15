@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 
 namespace Lab1_3_LINQ
 {
@@ -27,6 +28,11 @@ namespace Lab1_3_LINQ
 
             Console.WriteLine("\n----- Exercise 3 -----\n");
             GroupWordsByLength("Это что же получается: ходишь, ходишь в школу, а потом бац - вторая смена");
+
+            Console.WriteLine("\n----- Exercise 4 -----\n");
+            var dictionary = CreateDictionary("This dog eats too much vegetables after lunch",
+                "Эта собака ест слишком много овощей после обеда");
+            PrintTranslatedBook("This dog eats too much vegetables after lunch", dictionary, 2);
         }
 
         public static string GetAllWithoutFirst3(IEnumerable<INamed> source, char delimeter)
@@ -77,6 +83,29 @@ namespace Lab1_3_LINQ
                     Console.WriteLine(item);
                 }
             }
+        }
+
+        public static void PrintTranslatedBook(string book, Dictionary<string, string> dictionary, int wordsOnPage)
+        {
+            var translatedBook =
+                from word in book.Split().Select(s => s.ToLower())
+                select dictionary[word].ToUpper();
+
+            while (translatedBook.Any())
+            {
+                Console.WriteLine(translatedBook.Take(wordsOnPage).Aggregate((x, y) => x + " " + y));
+                translatedBook = translatedBook.Skip(wordsOnPage);
+            }
+        }
+
+        public static Dictionary<string, string> CreateDictionary(string from, string to)
+        {
+            return from
+                .ToLower()
+                .Split()
+                .Zip(to.ToLower()
+                        .Split(), (from, to) => new { from, to })
+                .ToDictionary(d => d.from, d => d.to);
         }
     }
 }
