@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 
 namespace Lab1_4_String_Exception
@@ -13,15 +14,20 @@ namespace Lab1_4_String_Exception
             foreach (var str in strings)
             {
                 var serializedStr = SerializeString(str);
-                foreach (var bt in serializedStr)
-                {
-                    Console.Write(bt + " ");
-                }
-                Console.WriteLine();
+                Console.Write("Hex: ");
+                Console.WriteLine(BitConverter.ToString(serializedStr));
+                var stringOfBytes = serializedStr
+                    .Select(b => b.ToString("000"))
+                    .Aggregate((x, y) => x + "-" + y);
+                Console.Write("Dec: ");
+                Console.WriteLine(stringOfBytes);
 
                 var deserializedStr = DeserializeString(serializedStr);
                 Console.WriteLine(deserializedStr);
+                Console.WriteLine();
             }
+
+            Console.WriteLine("\n----- Exercise 2 -----\n");
         }
 
         public static byte[] SerializeString(string source)
@@ -31,9 +37,11 @@ namespace Lab1_4_String_Exception
     
         public static string DeserializeString(byte[] source)
         {
-            var deserializedStr = Encoding.Unicode.GetChars(source);
-            StringBuilder result = new();
-            return result.Append(deserializedStr).ToString();
+            return Encoding.Unicode.GetString(source);
+
+            //var deserializedChrs = Encoding.Unicode.GetChars(source);
+            //StringBuilder result = new(deserializedStr.Length + 1);
+            //return result.Append(deserializedChrs).ToString();
         }
     }
 
