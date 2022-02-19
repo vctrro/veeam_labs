@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Text;
 
 namespace Lab1_4_String_Exception
@@ -17,7 +18,7 @@ namespace Lab1_4_String_Exception
                 Console.Write("Hex: ");
                 Console.WriteLine(BitConverter.ToString(serializedStr));
                 var stringOfBytes = serializedStr
-                    .Select(b => b.ToString("000"))
+                    .Select(b => b.ToString("D3"))
                     .Aggregate((x, y) => x + "-" + y);
                 Console.Write("Dec: ");
                 Console.WriteLine(stringOfBytes);
@@ -28,6 +29,56 @@ namespace Lab1_4_String_Exception
             }
 
             Console.WriteLine("\n----- Exercise 2 -----\n");
+            
+            Console.WriteLine("Enter a name, then a phone number");
+            try
+            {
+                Person person = Person.CreatePerson(
+                    Console.ReadLine(),
+                    Console.ReadLine()
+                );
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.PrintException(ex, "Exception in Person after second trow");
+            }
+
+            try
+            {
+                ExceptionDispatchInfo.Throw(ExceptionHandler.LastException);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.PrintException(ex, "Exception from Exceptions thrown with DispatchInfo");
+            }
+
+            try
+            {
+                ExceptionHandler.LastDispatchInfos?.Throw();
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.PrintException(ex, "Exception from DispatchInfos");
+            }
+
+            try
+            {
+                ExceptionDispatchInfo.Throw(ExceptionHandler.LastException);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.PrintException(ex, "Exception from Exceptions thrown with DispatchInfo 2");
+            }
+
+            try
+            {
+                throw ExceptionHandler.LastException;
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.PrintException(ex, "Exception from Exceptions");
+            }
+
         }
 
         public static byte[] SerializeString(string source)
@@ -44,6 +95,5 @@ namespace Lab1_4_String_Exception
             //return result.Append(deserializedChrs).ToString();
         }
     }
-
 }
 
